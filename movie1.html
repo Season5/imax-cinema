@@ -47,7 +47,8 @@
 				<div class="cube__side cube__side--back">
 					<div class="screen">
 						<div class="video">
-							<video class="video-player" src="media/sintel.mp4" preload="auto" poster="media/gods.png">
+							<video class="video-player" src="media/gods.mp4" preload="auto" poster="media/gods.png">
+							<source src="media/gods.ogg" type='video/ogg; codecs="theora, vorbis"'>
 								<source src="media/sintel.mp4" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'>
 								<p>Sorry, but your browser does not support this video format.</p>
 							</video>
@@ -806,6 +807,7 @@
 			</ul>
 			<button class="action action--buy">Buy tickets</button>
 		</div><!-- /plan -->
+                  <button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
                    </div>
                </div>
                 <!--
@@ -829,7 +831,10 @@
                 <script src="js/vendor/what-input.min.js"></script>
                 <script src="js/foundation.min.js"></script>
                 <script src="js/app.js"></script>
+                <script src="js/classie.js"></script>
+		        <script src="js/main.js"></script>
                 <script type="text/javascript">
+                
        function autorun()
        {
 
