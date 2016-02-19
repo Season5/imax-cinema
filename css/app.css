@@ -58,7 +58,7 @@ a:hover, a:focus {
 	font-size: 0.85em;
 }
 
-.header_title {
+.header__title {
 	font-size: 1.25em;
 	margin: 0;
 	padding: 0;
@@ -116,15 +116,15 @@ a:hover, a:focus {
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
-	font-family: 'codropsicons';
+	font-family: 'Raleway';
 	line-height: 1;
 
 	speak: none;
 	-webkit-font-smoothing: antialiased;
 }
 
-.seat-icon--prev:before {
-	content: "\e004";
+.seat-icon--prev {
+	content: "\e008";
 }
 .container {
   position: relative;
