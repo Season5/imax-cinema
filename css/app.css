@@ -187,8 +187,8 @@ a:hover, a:focus {
 }
 
 .rows--mini .row__seat {
-  width: 10px;
-  height: 10px;
+  width: 3px;
+  height: 3px;
   background: rgba(72, 72, 78, 0.5);
   margin: 1px;
   border-radius: 1px;
@@ -448,13 +448,14 @@ a:hover, a:focus {
   display: flex;
   -webkit-align-items: center;
   align-items: center;
-  height: 90px;
+  height: 80px;
   background: #000;
   border-radius: 0 0 7px 7px;
   -webkit-transform: translate3d(0, 100%, 0);
   transform: translate3d(0, 100%, 0);
   -webkit-transition: -webkit-transform 0.3s;
   transition: transform 0.3s;
+/*  margin-top: 690px;*/
 }
 
 .intro--shown {
