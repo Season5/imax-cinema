@@ -48,7 +48,6 @@ a:hover, a:focus {
 	background: rgba(24,24,28,0.3);
 	font-size: 0.85em;
 }
-
 .header__title {
 	font-size: 1.25em;
 	margin: 0;
@@ -68,55 +67,7 @@ a:hover, a:focus {
 	display: block;
 }
 
-/* Top Navigation Style */
-.seat-links {
-	position: relative;
-	display: inline-block;
-	text-align: center;
-	white-space: nowrap;
-	margin: 0 0.75em 0 0;
-}
 
-.seat-links::after {
-	position: absolute;
-	top: 0;
-	left: 50%;
-	width: 1px;
-	height: 100%;
-	background: rgba(255,255,255,0.1);
-	content: '';
-	-webkit-transform: rotate3d(0,0,1,22.5deg);
-	transform: rotate3d(0,0,1,22.5deg);
-}
-
-.seat-icon {
-	display: inline-block;
-	margin: 0.5em;
-	padding: 0em 0;
-	width: 1.5em;
-	text-decoration: none;
-}
-
-.seat-icon span {
-	display: none;
-}
-
-.seat-icon:before {
-	margin: 0 5px;
-	text-transform: none;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-family: 'Raleway';
-	line-height: 1;
-
-	speak: none;
-	-webkit-font-smoothing: antialiased;
-}
-
-.seat-icon--prev {
-	content: "\e008";
-}
 .container {
   position: relative;
   -webkit-perspective: 2000px;
@@ -529,7 +480,7 @@ a:hover, a:focus {
   display: flex;
   -webkit-align-items: center;
   align-items: center;
-  min-height: 90px;
+  height: 90px;
   background: #000;
   border-radius: 0 0 7px 7px;
   -webkit-transform: translate3d(0, 100%, 0);
@@ -549,16 +500,10 @@ a:hover, a:focus {
 }
 .intro__side:first-child {
   border-right: 1px solid #121213;
+  height:80px;
 }
 .intro__side:last-child {
   text-align: center;
-}
-
-.intro__title {
-  padding: 0 0 0 3em;
-  margin: 0 0 0 0.75em;
-  background: url(../img/camera.svg) no-repeat 0% 50%;
-  background-size: auto 70%;
 }
 
 .intro__up {
@@ -572,12 +517,6 @@ a:hover, a:focus {
   font-weight: 700;
   color: #adadad;
 }
-
-.intro__partial {
-  font-size: 0.5em;
-  color: #63636F;
-}
-
 .action {
   border: none;
   padding: 0;
@@ -702,11 +641,13 @@ a:hover, a:focus {
     background: transparent;
   }
 
-  .header__title {
+.header__title {
     padding: 1em 0 0;
     font-size: 2em;
   }
-
+.cf-icon-left:before {
+  content: "\e000";
+}
   .note--screen {
     display: block;
   }
