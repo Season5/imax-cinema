@@ -155,8 +155,8 @@ a:hover, a:focus {
 }
 
 .rows--mini {
-  width: 230px;
-  margin: 0 auto;
+  width: 94%;
+  margin: 10px auto;
 }
 
 .row {
@@ -168,7 +168,9 @@ a:hover, a:focus {
 .rows--mini .row:nth-child(9) {
   margin: 0 0 15px 0;
 }
-
+.rows--mini .row_move:nth-child(9) {
+  margin-left:-15px;
+}
 .rows--large .row {
   left: 0;
   height: 100%;
@@ -194,12 +196,7 @@ a:hover, a:focus {
 }
 
 .rows--mini .row__seat:hover {
-  background: #57e683;
-}
-
-.rows--mini .row__seat--reserved,
-.rows--mini .row__seat--reserved:hover {
-  background: #de6363;
+  background: #0099CC;
 }
 
 .rows--large .row__seat {
@@ -333,38 +330,9 @@ a:hover, a:focus {
   margin: 0.25em 0 0.5em;
 }
 
-.legend {
-  list-style: none;
-  margin: 1em 0 0 0;
-  padding: 0;
-  text-align: center;
-}
-
-.legend__item {
-  font-size: 0.85em;
-  font-weight: bold;
-  margin: 0 9px 0 0;
-  display: inline-block;
-}
-
-.legend__item::before {
-  content: '';
-  width: 10px;
-  height: 10px;
-  display: inline-block;
-  margin: 0 5px 0 0;
-  border-radius: 2px;
-  background: rgba(72, 72, 78, 0.5);
-}
-
-.legend__item--reserved::before {
-  background: #de6363;
-}
-
-.legend__item--selected::before,
 .rows--mini .row__seat--selected,
 .rows--mini .row__seat--selected:hover {
-  background: #21c252;
+  background: #0099CC;
 }
 
 /* Tooltip */
@@ -399,7 +367,7 @@ a:hover, a:focus {
   z-index: 1001;
   pointer-events: none;
   border-color: transparent;
-  border-top-color: #57e683;
+  border-top-color: #0099CC;
   border-width: 6px;
   margin-left: -6px;
   -webkit-transform: translate3d(0, 5px, 0);
@@ -413,7 +381,7 @@ a:hover, a:focus {
 
 .tooltip::after {
   content: attr(data-tooltip);
-  background: #57e683;
+  background: #0099CC;
   border-radius: 3px;
   color: #fff;
   font-weight: bold;
@@ -535,7 +503,7 @@ a:hover, a:focus {
 .action--seats {
   padding: 0.5em 0 0.5em 2.5em;
   margin: 0 0 0 1em;
-  color: #21c252;
+  color: #0099CC;
   margin: 0 auto;
   display: inline-block;
   background: url(../img/seats.svg) no-repeat 0% 50%;
@@ -597,7 +565,7 @@ a:hover, a:focus {
 
 .action--buy {
   margin: 1em auto;
-  background: #26AD4F;
+  background: #0d33d0;
   font-size: 1em;
   width: 100%;
   padding: 0.75em 1.5em;
@@ -607,7 +575,7 @@ a:hover, a:focus {
 }
 
 .action--buy:hover {
-  background: #21c252;
+  background: #0099CC;
 }
 
 /* Fallback */
@@ -671,6 +639,6 @@ a:hover, a:focus {
   }
 
   .rows--mini .row__seat--selected:hover {
-    background: #21c252;
+    background: #0099CC;
   }
 }
