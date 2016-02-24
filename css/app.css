@@ -30,7 +30,6 @@ h1, h2, h3, h4, h5, h6, p{
 
 
 /*animation transition for the home page*/
-/*
 @keyframes cf3FadeInOut {
   0% {
   opacity:1;
@@ -45,44 +44,8 @@ opacity:0;
 opacity:0;
 }
 }
-*/
 
 
-
-@keyframes cf3FadeInOut {
-  0% {
-    opacity:1;
-  }
-  17% {
-    opacity:1;
-  }
-  25% {
-    opacity:0;
-  }
-  92% {
-    opacity:0;
-  }
-  100% {
-    opacity:1;
-  }
-}
-
-#cf3 img:nth-of-type(1) {
-  animation-delay: 6s;
-}
-#cf3 img:nth-of-type(2) {
-  animation-delay: 4s;
-}
-#cf3 img:nth-of-type(3) {
-  animation-delay: 2s;
-}
-#cf3 img:nth-of-type(4) {
-  animation-delay: 0;
-}
-
-
-
-/*
 #cf3 img.top {
 animation-name: cf3FadeInOut;
 animation-timing-function: ease-in-out;
@@ -90,4 +53,3 @@ animation-iteration-count: infinite;
 animation-duration: 10s;
 animation-direction: alternate;
 }
-*/
