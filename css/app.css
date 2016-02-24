@@ -46,7 +46,7 @@ opacity:0;
 }
 
 
-#cf3 img.top {
+#cf3 img {
 animation-name: cf3FadeInOut;
 animation-timing-function: ease-in-out;
 animation-iteration-count: infinite;
