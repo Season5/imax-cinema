@@ -6,6 +6,9 @@
 ul{
     margin: 0;
 }
+span{
+    color: #fff;
+}
 .cb-slideshow,
 .cb-slideshow:after { 
     position: fixed;
