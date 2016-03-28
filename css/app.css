@@ -228,7 +228,27 @@
 
 /*end of landing page animation*/
 
+/*schedule section*/
 
+.schedule{
+    margin-top: 1rem;
+}
+.schedule p{
+    text-align: center;
+    color: #fff;
+    opacity:0.5;
+}
+
+.schedule h1{
+    color: gray;
+    text-align: center;
+}
+
+.schedule span{
+    padding: 3%;
+}
+
+/*end of schedule section*/
 
 /*about section*/
 
