@@ -1,5 +1,11 @@
+*{
+    margin: 0;
+    padding: 0;
+}
 /*landing page animation*/
-
+ul{
+    margin: 0;
+}
 .cb-slideshow,
 .cb-slideshow:after { 
     position: fixed;
@@ -12,6 +18,9 @@
 .cb-slideshow:after { 
     content: '';
     background: transparent url(../img/pattern.png) repeat top left; 
+}
+.cb-slideshow li{
+    list-style: none;
 }
 .cb-slideshow li span { 
     width: 100%;
