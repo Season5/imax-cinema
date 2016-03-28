@@ -1,8 +1,6 @@
 /*landing page animation*/
 
-.cb-slideshow,
-.cb-slideshow:after { 
-    position: fixed;
+.cb-slideshow { 
     width: 100%;
     height: 100%;
     top: 0px;
