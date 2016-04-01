@@ -1,4 +1,10 @@
-<<<<<<< HEAD
+
+
+
+
+
+
+
 *{
     margin: 0;
     padding: 0;
@@ -409,7 +415,7 @@ body {
 	color: #fff;
 	background: #272729;
 	height: 100vh;
-	overflow: hidden;
+/*	overflow: hidden;*/
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
@@ -426,7 +432,7 @@ a:hover, a:focus {
 
 .hidden {
 	position: absolute;
-	overflow: hidden;
+/*	overflow: hidden;*/
 	width: 0;
 	height: 0;
 	pointer-events: none;
@@ -807,14 +813,14 @@ a:hover, a:focus {
   height: 80%;
   margin-top: 33px;
   margin-left: 130px;
-  overflow: hidden;
+/*  overflow: hidden;*/
   border-radius: 7px;
 }
 
 .video {
   width: 100%;
   height: 100%;
-  overflow: hidden;
+/*  overflow: hidden;*/
   border-radius: 7px;
   position: absolute;
 }
@@ -1043,4 +1049,3 @@ a:hover, a:focus {
     background: #0099CC;
   }
 }
->>>>>>> 5950364a0360aba8133cd26f1e9497ed744aa4f5
