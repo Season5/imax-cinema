@@ -1,0 +1,1 @@
+web: gunicorn imax_cinema.wsgi --log-file -

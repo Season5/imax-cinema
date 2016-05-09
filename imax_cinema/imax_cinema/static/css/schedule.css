@@ -355,7 +355,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url(../media/gods.png) no-repeat center top;
+  background: url(../img/gods.png) no-repeat center top;
   top: 0;
   background-size: cover;
   z-index: 10;

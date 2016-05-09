@@ -130,9 +130,9 @@
 		// the screen
 		monitor = room.querySelector('.screen'),
 		// the video element
-		video = monitor.querySelector('video'),
+		// video = monitor.querySelector('video'),
 		// play video control
-		playCtrl = monitor.querySelector('button.action--play'),
+		// playCtrl = monitor.querySelector('button.action--play'),
 		// intro element
 		intro = monitor.querySelector('.intro'),
 		// 'select your seats' control
@@ -252,7 +252,7 @@
 		var onSelectSeats = function() { 
 			classie.remove(intro, 'intro--shown');
 			classie.add(plan, 'plan--shown');
-			classie.add(playCtrl, 'action--faded');
+			// classie.add(playCtrl, 'action--faded');
 			zoomOutScreen(function() {
 				showTiltCtrl();
 			}); 
@@ -260,9 +260,9 @@
 		selectSeatsCtrl.addEventListener('click', onSelectSeats);
 
 		// play video
-		playCtrl.addEventListener('click', videoPlay);
+		// playCtrl.addEventListener('click', videoPlay);
 		// ended video event
-		video.addEventListener('ended', videoLoad);
+		// video.addEventListener('ended', videoLoad);
 
 		// window resize: update window size
 		window.addEventListener('resize', throttle(function(ev) {
@@ -381,15 +381,15 @@
 
 	function videoPlay() {
 		// hide the play control
-		classie.remove(playCtrl, 'action--shown');
-		video.currentTime = 0;
-		video.play();
+		// classie.remove(playCtrl, 'action--shown');
+		// video.currentTime = 0;
+		// video.play();
 	}
 
 	function videoLoad() {
 		// show the play control
-		classie.add(playCtrl, 'action--shown');
-		video.load();
+		// classie.add(playCtrl, 'action--shown');
+		// video.load();
 	}
 
 	init();
