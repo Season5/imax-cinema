@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}
+<title>Imax Kenya</title>
+{% endblock %}
+{% block content %}
+<!--                Off canvas toggle-->
+
+<input type="checkbox" id="sidebartoggler">
+
+  <div class="page-wrapper">
+
+    <label class="toggle" for="sidebartoggler"><span>☰</span></label>
+      
+      
+      
+
+    <div class="page-content">
+<!--                end off canvas toggle-->
+                
+                
+                
+<!--landing page-->
+                
+
+            
+    <ul class="cb-slideshow">
+        {% for item in movies %}
+            <li>
+                <span style="background-image: url({{ item.preview.url }}); ">Image {{ item.id }}</span>
+                <div><a href="{{ item.get_absolute_url }}" class="button">Preview</a></div>
+            </li>
+        {% endfor %}
+    </ul>      
+                
+                
+<!-- end of landing page-->
+</div>
+<!--      end of page content-->
+
+    
+            {% include 'sidebar.html' %}
+  </div>
+  <script type="text/javascript">
+                   function autorun()
+                    {                   
+                        if (window.addEventListener) window.addEventListener("load", autorun, false);
+                        else if (window.attachEvent) window.attachEvent("onload", autorun);
+                        else window.onload = autorun;
+                    }
+                </script>
+{% endblock %}

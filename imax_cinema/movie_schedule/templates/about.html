@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}
+<title>Imax Kenya | About</title>
+{% endblock %}
+
+{% block content %}       
+<input type="checkbox" id="sidebartoggler">
+
+  <div class="page-wrapper">
+
+    <label class="toggle" for="sidebartoggler">☰</label>
+
+    <div class="page-content">
+    <!---Page content goes here...-->
+<!--                About section-->
+
+       
+<div class="about">        
+<div class="row">
+    <div class="small-3 small-centered columns">
+        <h1 class="hvr-pulse"> 
+           About Us
+        </h1>
+    </div>
+    <div class="small-11 small-centered columns">        
+        <p>
+            Located in Mama Ngina Strt <img src="{% static 'img/location.png' %}"> NAIROBI, KENYA
+         </p>
+    </div>
+     <div class="small-11 small-centered columns">
+        <p>
+           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+         </p>
+    </div>
+</div>
+    <br/>
+    <br/>
+    
+    <div class="row medium-uncollapse large-collapse">
+  <div class="small-6 columns">
+    <img src="{% static 'img/batman_in_batman_v_superman-wide.jpg' %}">
+  </div>
+  <div class="small-6 columns">
+        <p>
+            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+      </p>
+  </div>
+</div>
+    
+</div>
+                
+<!--                end of About section-->
+                
+                
+<!--                contact section-->
+<div class="form-wrap">
+  
+  <h1>Contact Me</h1>
+  
+  <input type="text" placeholder="Name">
+  <input type="email" placeholder="Email">
+  <textarea placeholder="Message"></textarea>
+  <input type="submit">
+  
+</div>
+              
+<!--                end of contact section-->
+    </div>
+<!--      end of page content-->
+
+   {% include 'sidebar.html' %}
+  </div>
+{% endblock %}
