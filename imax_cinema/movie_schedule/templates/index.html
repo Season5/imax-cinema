@@ -48,4 +48,39 @@
                         else window.onload = autorun;
                     }
                 </script>
+    <script type="text/javascript">
+    $(window).load(function bg(){        
+        var div = $('.cb-slideshow');
+        var images = div.find('li');
+        var timeOut = 5000;
+        var easing = 'linear';
+        var totalLength = images.length;
+        console.log("Length", images);
+        // $(images).css({'opacity': 1});
+        $(images).each(function(index, image){
+            var button = $(image).find('div');  
+            $(image).css({'opacity':0});
+            setTimeout(function(){
+                $(button).css({'z-index': 1000});
+                $(image).css({
+                    'z-index':500,
+                });
+                $(image).animate({
+                    'opacity': 1,
+                },timeOut, function(){
+                    $(image).delay(timeOut).css({
+                    'z-index':0,
+                    });
+                    $(button).delay(timeOut).css({
+                    'z-index':0,
+                    });
+                });     
+                console.log(index);
+                if(index == totalLength - 1){
+                    return false;
+                } 
+            }, (timeOut * index));
+        });
+    });
+    </script>
 {% endblock %}

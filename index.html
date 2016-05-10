@@ -114,5 +114,32 @@
        else if (window.attachEvent) window.attachEvent("onload", autorun);
        else window.onload = autorun;
      </script>
+    <script type="text/javascript">
+    $(window).load(function bg(){        
+        var div = $('.cb-slideshow');
+        var images = div.find('li');
+        var timeOut = 5000;
+        var easing = 'linear';
+        var totalLength = images.length;
+        console.log("Length", totalLength);
+        // $(images).css({'opacity': 1});
+        $(images).each(function(index, image){
+            var button = $(image).find('div');  
+            $(image).css({'opacity':0});
+            setTimeout(function(){
+                $(button).css({'z-index': 1000});
+                $(image).animate({
+                    'opacity': 1,
+                },timeOut);
+                $(image).css({'opacity':0}).delay(timeOut);
+                // $(button).css({'z-index': 0}).delay(timeOut);        
+                console.log(image);
+                if(index == totalLength - 1){
+                    bg();
+                } 
+            }, (timeOut * index));
+        });
+    });
+    </script>
             </body>
         </html>
