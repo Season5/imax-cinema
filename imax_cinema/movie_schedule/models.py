@@ -68,7 +68,7 @@ class Ticket(models.Model):
 	pricing = models.ManyToManyField(MoviePricing)
 	
 	def __unicode__(self):
-		return str(self.user) + ': ' + str(self.movie) + str(self.ticket)
+		return str(self.user) + ': ' + str(self.movie) 
 		
 	def total(self):
 		return len(self.ticket)

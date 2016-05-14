@@ -1,8 +1,11 @@
+import string
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Movie, MoviePricing, MovieViewing
 from django.shortcuts import render, get_object_or_404, redirect
 
+from .custom import chunks
+from .models import Movie, MoviePricing, MovieViewing, Ticket, CinemaSeat
 # Create your views here.
 def home(request):
 	movie_queryset = Movie.objects.all()
@@ -31,8 +34,11 @@ def movie(request, id = None):
 	print "1: ", single_movie
 	viewset = MovieViewing.objects.get(movie=single_movie)
 	print "2: ", viewset
+	seats = CinemaSeat.objects.all()
+	print "3: ", list(chunks(seats, 18))
 	context = {
 		"movie": single_movie,
 		"viewset": viewset,
+		'seats': list(chunks(seats, 18)),
 	}
 	return render(request, "movie.html", context)
