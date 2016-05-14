@@ -76,19 +76,20 @@ WSGI_APPLICATION = 'imax_cinema.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'imax',
-        'USER': 'chris',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '', 
-        'CONN_MAX_AGE': 500,
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        # 'NAME': 'imax',
+        # 'USER': 'chris',
+        # 'PASSWORD': '',
+        # 'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        # 'PORT': '', 
+        # 'CONN_MAX_AGE': 500,
     }
 }
 
-DATABASE_URL = 'postgresql:///imax'
+# DATABASE_URL = 'postgresql:///imax'
 
-DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
+# DATABASES = {'default': dj_database_url.config(default=DATABASE_URL)}
 
 AUTH_PASSWORD_VALIDATORS = (
     {

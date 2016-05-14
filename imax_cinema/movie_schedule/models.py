@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 
+from django.conf import settings
 from django.db import models
 
 from django.core.urlresolvers import reverse
@@ -45,3 +46,29 @@ class MovieViewing(models.Model):
 
 	def __unicode__(self):
 		return str(self.movie)
+		
+class CinemaSeat(models.Model):
+	seat = models.CharField(max_length=2)
+	
+	def __unicode__(self):
+		return str(self.seat)
+	
+		
+class Ticket(models.Model):
+	user = models.OneToOneField(
+		settings.AUTH_USER_MODEL,
+		on_delete=models.CASCADE,
+		)
+	movie = models.OneToOneField(
+		'Movie',
+		on_delete=models.CASCADE,
+		)
+	ticket = models.ManyToManyField(CinemaSeat)
+	number_of_tickets = models.IntegerField(default=0)
+	pricing = models.ManyToManyField(MoviePricing)
+	
+	def __unicode__(self):
+		return str(self.user) + ': ' + str(self.movie) + str(self.ticket)
+		
+	def total(self):
+		return len(self.ticket)
