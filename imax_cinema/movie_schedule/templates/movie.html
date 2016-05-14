@@ -85,4 +85,33 @@
                     
                     
 			     </script>
+			     <script type="text/javascript" >
+			     $(document).ready(function(){
+			     	var seatValues = [];
+			     	$('.tooltip').click(function(){
+			     		var seat = $('.row').find('.row__seat--selected');
+			     		$(seat).each(function(index, data){
+					     	seatValues.push($(data).attr('data-tooltip'));
+					     	seatValues = $.unique(seatValues);
+			     		});
+					    console.log(seatValues);
+			     	});
+			     	$('.action--buy').click(function() {
+						$.ajax({
+							url: "{% url 'seat_values' %}",
+							type: "POST",
+							data: {
+								seats : seatValues,
+								csrfmiddlewaretoken: '{{ csrf_token }}',
+							},
+							success: function(data) {
+								console.log(data.seats);
+							}, 
+							error: function( jqXHR, textStatus ) {
+								console.log( "Request failed: " + textStatus );
+							}
+			     		});			     	    
+			     	});
+			     });
+			     </script>
 {% endblock %}

@@ -4,6 +4,8 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 
+import simplejson
+
 from .custom import chunks
 from .models import Movie, MoviePricing, MovieViewing, Ticket, CinemaSeat
 # Create your views here.
@@ -31,14 +33,22 @@ def schedule(request):
 
 def movie(request, id = None):
 	single_movie = get_object_or_404(Movie, id = id)
-	print "1: ", single_movie
 	viewset = MovieViewing.objects.get(movie=single_movie)
-	print "2: ", viewset
 	seats = CinemaSeat.objects.all()
-	print "3: ", list(chunks(seats, 18))
 	context = {
 		"movie": single_movie,
 		"viewset": viewset,
 		'seats': list(chunks(seats, 18)),
 	}
 	return render(request, "movie.html", context)
+	
+def seat_values(request):
+	if request.is_ajax():
+		seats = request.POST.getlist('seats[]')
+		print "Seats: ", seats
+		response = {
+			'seats': seats,
+		}
+		json = simplejson.dumps(response)
+		return HttpResponse(json, content_type="application/json")
+		
