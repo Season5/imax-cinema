@@ -66,7 +66,7 @@
 			<button class="action action--buy">Buy tickets</button>
 			<div style="z-index:5000;
 						background:white;
-						height:60vh;
+						height:100vh;
 						 transform: translateY(-0%);">
             	<form method="POST" action="">
             		{{ csrf_token }}
@@ -111,6 +111,9 @@
 			     	var stu_tkts = $('#id_number_of_student_tickets');
 			     	var num_tkts = $('#num_tkt');
 			     	var tk_tkts = $('#tk_tkt');
+			     	var ticketing = $('.ticketing');
+			     	var reg_id = reg_tkts.attr('id');
+			     	var stu_id = stu_tkts.attr('id');
 			     	$('.price').css({'height': '100px', 'overflow-y': 'scroll'});
 			     	$('p').css({'color':'#000'});
 			     	$('span').css({'color':'#000'});
@@ -132,20 +135,44 @@
 							},
 							success: function(data) {
 								var num_seats = data.seats.length;
-								for(var x=0; x<num_seats; x++){
-									$('#seating').append(data.seats[x]);	
-									if( x != num_seats - 1){
-										$('#seating').append(", ");	
-									}
-								}
+								$('#seating').text(data.seats.toString());
+			     				ticketing.attr('max', num_seats.toString())
 								num_tkts.text(num_seats);
 								num_tkts.val(num_seats);
-								var new_reg = 0;
-								var new_stu = 0;
-								tk_tkts.text(total);
-								tk_tkts.val(total);
-								console.log(num_tkts.val());
-								console.log(total);
+								var total = 0;
+								console.log("Seats", num_seats);
+								ticketing.change(function(){
+									var stu = stu_tkts.val();
+									var reg = reg_tkts.val();
+									var current = $(this);
+									total = +stu + +reg;
+									console.log("Total", total);
+									if(reg_id === current.attr('id')){
+										var remaining_tkts = (num_seats - +stu);
+										console.log("Tkts", remaining_tkts);
+										stu_tkts.attr('max', remaining_tkts.toString());
+										console.log("Regular");
+										if(total > num_seats){
+											total = num_seats;
+											current.val(remaining_tkts);
+										} else {
+											tk_tkts.text(total);
+											console.log("Total", total);
+										}
+									}else if(stu_id === current.attr('id')) {
+										var remaining_tkts = (num_seats - +reg);
+										console.log("Tkts", remaining_tkts);
+										reg_tkts.attr('max', remaining_tkts.toString());
+										console.log("Student");
+										if(total > num_seats){
+											total = num_seats;
+											current.val(remaining_tkts);
+										} else {
+											tk_tkts.text(total);
+											console.log("Total", total);
+										}
+									}
+								})
 							}, 
 							error: function( jqXHR, textStatus ) {
 								console.log( "Request failed: " + textStatus );

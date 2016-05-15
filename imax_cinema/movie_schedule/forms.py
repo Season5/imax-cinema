@@ -8,3 +8,11 @@ class TicketForm(forms.ModelForm):
         fields = [
             'number_of_regular_tickets',
             'number_of_student_tickets',]
+        widgets = {
+            'number_of_regular_tickets': forms.NumberInput(attrs={
+                'class': 'ticketing',
+            }),
+            'number_of_student_tickets': forms.NumberInput(attrs={
+                'class': 'ticketing',
+            }),
+        }
