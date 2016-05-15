@@ -1,11 +1,11 @@
-function custom_ajax(path, csrf) {
+function custom_ajax(path, csrf, booked_seats) {
     $('.action--buy').click(function() {
-        console.log(seating());
+        console.log(seating(booked_seats));
         $.ajax({
             url: path,
             type: "POST",
             data: {
-                seats: seating(),
+                seats: seating(booked_seats),
                 csrfmiddlewaretoken: csrf,
             },
             success: function(data) {
@@ -18,19 +18,22 @@ function custom_ajax(path, csrf) {
     });
 }
 
-function seating() {
+function seating(booked_seats) {
     $('.tooltip').click(function() {
-        getSeats();
+        getSeats(booked_seats);
+        console.log(getSeats(booked_seats));
     });
-    return getSeats();
+    return getSeats(booked_seats);
 }
 
-function getSeats() {
+function getSeats(booked_seats) {
     var seatValues = [];
     var seat = $('.row').find('.row__seat--selected');
     $(seat).each(function(index, data) {
-        seatValues.push($(data).attr('data-tooltip'));
-        seatValues = $.unique(seatValues);
+        if ($.inArray($(data).attr('data-tooltip'), booked_seats) == -1) {
+            seatValues.push($(data).attr('data-tooltip'));
+            seatValues = $.unique(seatValues);
+        }
     });
     return seatValues;
 }
