@@ -8,6 +8,8 @@ urlpatterns = [
     url(r'^about/$', views.about, name="about"),
     url(r'^schedule/$', views.schedule, name="schedule"),
     url(r'^movie/(?P<id>[0-9]+)/$', views.movie, name="movie"),
+    url(r'^seat_values/$', views.seat_values, name="seat_values"),
+    url(r'^occupied_seat_val/$', views.occupied_seat_val, name="occupied_seat_val"),
 ]
 if settings.DEBUG:
 	urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
