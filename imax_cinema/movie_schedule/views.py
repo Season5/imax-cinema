@@ -36,12 +36,36 @@ def movie(request, id = None):
 	single_movie = get_object_or_404(Movie, id = id)
 	viewset = MovieViewing.objects.get(movie=single_movie)
 	pricing = MoviePricing.objects.all()
-	seats = CinemaSeat.objects.all()
-	form = TicketForm()
+	cinema_seats = CinemaSeat.objects.all()
+	
+	if request.session.get('seats'):
+		seating = CinemaSeat.objects.filter(seat__in=request.session.get('seats')).values('id')
+		print "Tiko, ", list( [seat['id'] for seat in seating ])
+	
+	form = TicketForm(data = request.POST)
+	if form.is_valid():
+		print "Valid form"
+		reg = form.cleaned_data.get('number_of_regular_tickets')
+		stu = form.cleaned_data.get('number_of_student_tickets')
+		prices = form.cleaned_data.get('pricing')
+		payment = (reg * prices.regular_fee) + (stu * prices.student_fee)
+		ticket = Ticket.objects.create(
+			user= request.user,
+			movie=single_movie,
+			number_of_regular_tickets=reg,
+			number_of_student_tickets=stu,
+			pricing=prices,
+			total_payment=payment)
+		ticket.save()
+		ticket.seat.set( list( [seat['id'] for seat in seating ]))
+		return redirect('movie', id)
+	else:
+		print[(field.label, field.errors) for field in form]
+		form = TicketForm()
 	context = {
 		"movie": single_movie,
 		"viewset": viewset,
-		'seats': list(chunks(seats, 18)),
+		'seats': list(chunks(cinema_seats, 18)),
 		'form': form,
 		'pricing': pricing,
 	}
@@ -50,18 +74,7 @@ def movie(request, id = None):
 def seat_values(request):
 	if request.is_ajax():
 		seats = request.POST.getlist('seats[]')
-		movie_id = request.POST.getlist('id')
-		form = TicketForm(request.POST)
-		print "Seats: ", seats
-		tickets = CinemaSeat.objects.filter(seat__in=seats)
-		if form.is_valid():
-			instance = form.save(commit=False)
-			instance.user = request.user
-			instance.ticket = tickets
-			instance.movie = Movie.objects.get(id=movie_id)
-			instance.save()
-		else:
-			form = TicketForm()
+		request.session['seats'] = seats
 		response = {
 			'seats': seats,
 		}

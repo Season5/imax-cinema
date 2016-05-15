@@ -49,7 +49,7 @@ class MovieViewing(models.Model):
 		return str(self.movie)
 		
 class CinemaSeat(models.Model):
-	seat = models.CharField(max_length=2)
+	seat = models.CharField(max_length=3)
 	
 	def __unicode__(self):
 		return str(self.seat)
@@ -60,15 +60,20 @@ class Ticket(models.Model):
 		settings.AUTH_USER_MODEL,
 		on_delete=models.CASCADE,
 		)
-	movie = models.OneToOneField(
+	movie = models.ForeignKey(
 		'Movie',
 		on_delete=models.CASCADE,
+		null=True
 		)
-	ticket = models.ManyToManyField(CinemaSeat)
+	seat = models.ManyToManyField(CinemaSeat)
 	number_of_regular_tickets = models.PositiveIntegerField(default=0)
 	number_of_student_tickets = models.PositiveIntegerField(default=0)
-	pricing = models.ManyToManyField(MoviePricing)
-	
+	pricing = models.ForeignKey(
+		'MoviePricing',
+		on_delete=models.CASCADE,
+		null=True
+		)
+	total_payment = models.PositiveIntegerField(default=0)
 	def __unicode__(self):
 		return str(self.user) + ': ' + str(self.movie) 
 		

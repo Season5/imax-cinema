@@ -68,18 +68,19 @@
 						background:white;
 						height:100vh;
 						 transform: translateY(-0%);">
-            	<form method="POST" action="">
-            		{{ csrf_token }}
-            		<h4>Movie Pricing</h4>
-            		<div class="price">
-            		{% for price in pricing %}
-            		<p>{{ price }}</p>
-            		{% endfor %}
-            		</div>
+            	<form method="POST" action=""  autocomplete="off" enc-type="mu">
+            		{% csrf_token %}
+            		<!--<h4>Movie Pricing</h4>-->
+            		<!--<div class="price">-->
+            		<!--{% for price in pricing %}-->
+            		<!--<p>{{ price }}</p>-->
+            		<!--{% endfor %}-->
+            		<!--</div>-->
             		<p>Total number of tickets remaining: <span id="num_tkt">0</span></p>
             		<p>Tickets taken: <span id="tk_tkt">0</span></p>
             		<p>Seats: <span id="seating"></span></p>
             		{{ form.as_p }}
+            		<input type="submit" value="Submit" class="button"/>
             	</form>
             	
             </div>
@@ -131,7 +132,6 @@
 							data: {
 								seats : seatValues,
 								csrfmiddlewaretoken: '{{ csrf_token }}',
-								id: '{{ movie.id }}',
 							},
 							success: function(data) {
 								var num_seats = data.seats.length;
@@ -159,7 +159,7 @@
 											tk_tkts.text(total);
 											console.log("Total", total);
 										}
-									}else if(stu_id === current.attr('id')) {
+									} else if (stu_id === current.attr('id')) {
 										var remaining_tkts = (num_seats - +reg);
 										console.log("Tkts", remaining_tkts);
 										reg_tkts.attr('max', remaining_tkts.toString());
