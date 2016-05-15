@@ -1,6 +1,9 @@
 function custom_ajax(path, csrf, booked_seats) {
     $('.action--buy').click(function() {
         console.log(seating(booked_seats));
+        $('#formie').animate({
+            'transform': 'translateY(-100%)',
+        }, 5000);
         $.ajax({
             url: path,
             type: "POST",

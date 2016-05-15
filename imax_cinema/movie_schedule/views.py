@@ -39,13 +39,7 @@ def movie(request, id = None):
 	pricing = MoviePricing.objects.all()
 	cinema_seats = CinemaSeat.objects.all()
 	
-	# time = timezone.now()
-	
-	# occupied_seats = Ticket.objects.filter(
-	# 	Q(movie__exact=single_movie)&
-	# 	Q(date__exact=time)
-	# 	)
-	# print occupied_seats
+	time = str(timezone.now().date())
 	
 	if request.session.get('seats'):
 		seating = CinemaSeat.objects.filter(seat__in=request.session.get('seats')).values('id')
@@ -75,7 +69,7 @@ def movie(request, id = None):
 		'seats': list(chunks(cinema_seats, 18)),
 		'form': form,
 		'pricing': pricing,
-		# 'occupied': occupied_seats,
+		'time': time,
 	}
 	return render(request, "movie.html", context)
 	

@@ -4,10 +4,20 @@ $(function() {
     });
 });
 
+var count = 0;
+
 function getDate(path, id) {
     var date;
+    if(count == 0){
+        date = $('#datepicker').val();
+        send(date);
+        count++;
+    }
     $('#datepicker').change(function() {
         date = $(this).val();
+        send(date);
+    });
+    function send(date){
         $.ajax({
             url: path,
             method: "GET",
@@ -22,5 +32,5 @@ function getDate(path, id) {
                 console.log("Request failed: " + textStatus);
             },
         });
-    });
+    }
 }
