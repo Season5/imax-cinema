@@ -1,9 +1,9 @@
 from __future__ import unicode_literals
 
 from django.conf import settings
-from django.db import models
-
 from django.core.urlresolvers import reverse
+from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 def upload_location(instance, filename):
@@ -65,6 +65,7 @@ class Ticket(models.Model):
 		on_delete=models.CASCADE,
 		null=True
 		)
+	date = models.DateField(default=timezone.now())
 	seat = models.ManyToManyField(CinemaSeat)
 	number_of_regular_tickets = models.PositiveIntegerField(default=0)
 	number_of_student_tickets = models.PositiveIntegerField(default=0)
@@ -76,7 +77,4 @@ class Ticket(models.Model):
 	total_payment = models.PositiveIntegerField(default=0)
 	def __unicode__(self):
 		return str(self.user) + ': ' + str(self.movie) 
-		
-class ViewerType(models.Model):
-	user_type = models.CharField(max_length=10)
 		

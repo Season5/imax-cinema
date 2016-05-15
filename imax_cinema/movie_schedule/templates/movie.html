@@ -83,13 +83,35 @@
 		<button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
 	</div>
 </div>
+{% for ticket in occupied %}
+{% for s in  ticket.seat.values %}
+<p class="occupied">{{ s.seat }}</p>
+{% endfor %}
+{% endfor %}
 
 <script src="{% static 'js/movie.js' %}"></script>
 <script src="{% static 'js/classie.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/ajax_funcs.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		var occupied = $('.occupied');
+		occupied.hide();
+		var occupied_seats = []
+		var grid = $('.row').find('.tooltip');
+		occupied.each(function(){
+			occupied_seats.push($(this).text());
+			occupied_seats = $.unique(occupied_seats);
+		});
+		$(grid).each(function(){
+			if( $.inArray($(this).attr('data-tooltip'), occupied_seats) !== -1){
+				$(this).css({'background': 'red'});
+				$(this).click(function (event) {
+					event.preventDefault();
+				});
+			}
+		});
 		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}');
 	});
 </script>

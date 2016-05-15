@@ -7,6 +7,7 @@ class TicketForm(forms.ModelForm):
         model = Ticket
         fields = [
             'pricing',
+            'date',
             'number_of_regular_tickets',
             'number_of_student_tickets',]
         widgets = {
