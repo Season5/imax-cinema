@@ -1,29 +1,26 @@
-{% extends 'base.html' %}
-{% load staticfiles %}
-{% block title %}
+{% extends 'base.html' %} {% load staticfiles %} {% block title %}
 <title>Imax | Cinema</title>
-{% endblock %}
-{% block content %}
-            <div class="row">
-                <div class="small-12 columns">
-                    <header class="header">
-                            <h1 class="header__title"><a href="{% url 'schedule' %}">Back to the Schedule</a></h1>
-                            <p class="note note--screen">Please view on a larger screen</p>
-                            <p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
-                        </header>
-                        <div class="container">
+{% endblock %} {% block content %}
+<div class="row">
+	<div class="small-12 columns">
+		<header class="header">
+			<h1 class="header__title"><a href="{% url 'schedule' %}">Back to the Schedule</a></h1>
+			<p class="note note--screen">Please view on a larger screen</p>
+			<p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
+		</header>
+		<div class="container">
 			<div class="cube">
 				<div class="cube__side cube__side--front"></div>
 				<div class="cube__side cube__side--back">
 					<div class="screen">
-							<div class="videoWrapper videoWrapper169 js-videoWrapper">
-    <!-- YouTube iframe. -->
-    <!-- note the iframe src is empty by default, the url is in the data-src="" argument -->
-    <!-- also note the arguments on the url, to autoplay video, remove youtube adverts/dodgy links to other videos, and set the interface language -->
-    <iframe class="videoIframe js-videoIframe" src="" frameborder="0" allowTransparency="true" allowfullscreen data-src="{{ viewset.movie_preview_video }}?autoplay=1& modestbranding=1&rel=0&hl=sv"></iframe>
-    <!-- the poster frame - in the form of a button to make it keyboard accessible -->
-    <button class="videoPoster js-videoPoster" style="background-image:url({{ viewset.movie_preview_poster.url }});">Play video</button>
-  </div>
+						<div class="videoWrapper videoWrapper169 js-videoWrapper">
+							<!-- YouTube iframe. -->
+							<!-- note the iframe src is empty by default, the url is in the data-src="" argument -->
+							<!-- also note the arguments on the url, to autoplay video, remove youtube adverts/dodgy links to other videos, and set the interface language -->
+							<iframe class="videoIframe js-videoIframe" src="" frameborder="0" allowTransparency="true" allowfullscreen data-src="{{ viewset.movie_preview_video }}?autoplay=1& modestbranding=1&rel=0&hl=sv"></iframe>
+							<!-- the poster frame - in the form of a button to make it keyboard accessible -->
+							<button class="videoPoster js-videoPoster" style="background-image:url({{ viewset.movie_preview_poster.url }});">Play video</button>
+						</div>
 						<div class="intro intro--shown">
 							<div class="intro__side">
 								<h2 class="intro__title">
@@ -49,9 +46,11 @@
 					{% endfor %}
 				</div>
 				<!-- /rows -->
-			</div><!-- /cube -->
-		</div><!-- /container -->
-        <div class="plan">
+			</div>
+			<!-- /cube -->
+		</div>
+		<!-- /container -->
+		<div class="plan">
 			<h3 class="plan__title">Seating Plan</h3>
 			<div class="rows rows--mini">
 				{% for row in seats %}
@@ -67,118 +66,31 @@
 			<div style="z-index:5000;
 						background:white;
 						height:100vh;
-						 transform: translateY(-0%);">
-            	<form method="POST" action=""  autocomplete="off" enc-type="mu">
-            		{% csrf_token %}
-            		<!--<h4>Movie Pricing</h4>-->
-            		<!--<div class="price">-->
-            		<!--{% for price in pricing %}-->
-            		<!--<p>{{ price }}</p>-->
-            		<!--{% endfor %}-->
-            		<!--</div>-->
-            		<p>Total number of tickets remaining: <span id="num_tkt">0</span></p>
-            		<p>Tickets taken: <span id="tk_tkt">0</span></p>
-            		<p>Seats: <span id="seating"></span></p>
-            		{{ form.as_p }}
-            		<input type="submit" value="Submit" class="button"/>
-            	</form>
-            	
-            </div>
-                
-		</div><!-- /plan -->
-                  <button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
-                </div>
-            </div>
-              
-                <script src="{% static 'js/movie.js' %}"></script>
-                <script src="{% static 'js/classie.js' %}"></script>
-                <script src="{% static 'js/main.js' %}"></script>
-                <script type="text/javascript">
-                
-			       function autorun()
-			       {
+						 transform: translateY(-0%);" id="formie">
+				<form method="POST" action="" autocomplete="off">
+					{% csrf_token %}
+					<p>Total number of tickets remaining: <span id="num_tkt">0</span></p>
+					<p>Tickets taken: <span id="tk_tkt">0</span></p>
+					<p>Seats: <span id="seating"></span></p>
+					{{ form.as_p }}
+					<input type="submit" value="Submit" class="button" />
+				</form>
 
-			       }
-			       if (window.addEventListener) window.addEventListener("load", autorun, false);
-			       else if (window.attachEvent) window.attachEvent("onload", autorun);
-			       else window.onload = autorun;
-                    
-                    
-			     </script>
-			     <script type="text/javascript" >
-			     $(document).ready(function(){
-			     	var seatValues = [];
-			     	var reg_tkts = $('#id_number_of_regular_tickets');
-			     	var stu_tkts = $('#id_number_of_student_tickets');
-			     	var num_tkts = $('#num_tkt');
-			     	var tk_tkts = $('#tk_tkt');
-			     	var ticketing = $('.ticketing');
-			     	var reg_id = reg_tkts.attr('id');
-			     	var stu_id = stu_tkts.attr('id');
-			     	$('.price').css({'height': '100px', 'overflow-y': 'scroll'});
-			     	$('p').css({'color':'#000'});
-			     	$('span').css({'color':'#000'});
-			     	$('.tooltip').click(function(){
-			     		var seat = $('.row').find('.row__seat--selected');
-			     		$(seat).each(function(index, data){
-					     	seatValues.push($(data).attr('data-tooltip'));
-					     	seatValues = $.unique(seatValues);
-			     		});
-			     	});
-			     	$('.action--buy').click(function() {
-						$.ajax({
-							url: "{% url 'seat_values' %}",
-							type: "POST",
-							data: {
-								seats : seatValues,
-								csrfmiddlewaretoken: '{{ csrf_token }}',
-							},
-							success: function(data) {
-								var num_seats = data.seats.length;
-								$('#seating').text(data.seats.toString());
-			     				ticketing.attr('max', num_seats.toString())
-								num_tkts.text(num_seats);
-								num_tkts.val(num_seats);
-								var total = 0;
-								console.log("Seats", num_seats);
-								ticketing.change(function(){
-									var stu = stu_tkts.val();
-									var reg = reg_tkts.val();
-									var current = $(this);
-									total = +stu + +reg;
-									console.log("Total", total);
-									if(reg_id === current.attr('id')){
-										var remaining_tkts = (num_seats - +stu);
-										console.log("Tkts", remaining_tkts);
-										stu_tkts.attr('max', remaining_tkts.toString());
-										console.log("Regular");
-										if(total > num_seats){
-											total = num_seats;
-											current.val(remaining_tkts);
-										} else {
-											tk_tkts.text(total);
-											console.log("Total", total);
-										}
-									} else if (stu_id === current.attr('id')) {
-										var remaining_tkts = (num_seats - +reg);
-										console.log("Tkts", remaining_tkts);
-										reg_tkts.attr('max', remaining_tkts.toString());
-										console.log("Student");
-										if(total > num_seats){
-											total = num_seats;
-											current.val(remaining_tkts);
-										} else {
-											tk_tkts.text(total);
-											console.log("Total", total);
-										}
-									}
-								})
-							}, 
-							error: function( jqXHR, textStatus ) {
-								console.log( "Request failed: " + textStatus );
-							}
-			     		});			     	    
-			     	});
-			     });
-			     </script>
+			</div>
+
+		</div>
+		<!-- /plan -->
+		<button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
+	</div>
+</div>
+
+<script src="{% static 'js/movie.js' %}"></script>
+<script src="{% static 'js/classie.js' %}"></script>
+<script src="{% static 'js/main.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ajax_funcs.js' %}"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}');
+	});
+</script>
 {% endblock %}

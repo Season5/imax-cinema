@@ -45,9 +45,15 @@ def movie(request, id = None):
 	form = TicketForm(data = request.POST)
 	if form.is_valid():
 		print "Valid form"
+		# instance = form.save(commit=False)
+		# instance.user = request.user
+		# instance.seats = seating
+		# instance.movie = single_movie
 		reg = form.cleaned_data.get('number_of_regular_tickets')
 		stu = form.cleaned_data.get('number_of_student_tickets')
 		prices = form.cleaned_data.get('pricing')
+		print prices
+		# prices = MoviePricing.objects.get()
 		payment = (reg * prices.regular_fee) + (stu * prices.student_fee)
 		ticket = Ticket.objects.create(
 			user= request.user,
@@ -58,6 +64,8 @@ def movie(request, id = None):
 			total_payment=payment)
 		ticket.save()
 		ticket.seat.set( list( [seat['id'] for seat in seating ]))
+		# instance.save()
+		# form.save_m2m()
 		return redirect('movie', id)
 	else:
 		print[(field.label, field.errors) for field in form]
