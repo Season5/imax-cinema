@@ -6,7 +6,7 @@
 		<header class="header">
 			<h1 class="header__title"><a href="{% url 'schedule' %}">Back to the Schedule</a></h1>
 			<form method="GET">
-			<p>Date: <input type="text" id="datepicker" size="30" name="date"></p>
+			<input type="text" id="datepicker" size="30" name="date" placeholder="Date">
 			</form>
 			<p class="note note--screen">Please view on a larger screen</p>
 			<p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
@@ -85,11 +85,14 @@
 		<button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
 	</div>
 </div>
+
+<div class="occupation">
 {% for ticket in occupied %}
 {% for s in  ticket.seat.values %}
 <p class="occupied">{{ s.seat }}</p>
 {% endfor %}
 {% endfor %}
+</div>
 
 <script src="{% static 'js/movie.js' %}"></script>
 <script src="{% static 'js/classie.js' %}"></script>
@@ -99,9 +102,7 @@
 <script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}");
-		seatBooking();
-		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}', seatBooking());
+		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}', getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}"));
 	});
 </script>
 {% endblock %}

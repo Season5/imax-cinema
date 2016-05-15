@@ -1,0 +1,9 @@
+.blue, .gray:hover{
+    background: #0099CC;
+}
+.gray{
+    background: rgba(72, 72, 78, 0.5);
+}
+#red{
+    background-color: red;
+}

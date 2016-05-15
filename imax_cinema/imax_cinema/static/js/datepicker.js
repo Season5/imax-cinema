@@ -1,5 +1,7 @@
 $(function() {
-    $("#datepicker").datepicker({dateFormat: "yy-mm-dd"});
+    $("#datepicker").datepicker({
+        dateFormat: "yy-mm-dd"
+    });
 });
 
 function getDate(path, id) {
@@ -14,7 +16,7 @@ function getDate(path, id) {
                 'movie_id': id,
             },
             success: function(data) {
-                console.log("Success", data.seats);
+                return seatBooking(data.seats);
             },
             error: function(jqXHR, textStatus) {
                 console.log("Request failed: " + textStatus);
