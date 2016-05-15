@@ -26,6 +26,7 @@ class Movie(models.Model):
 		return self.title
 		
 	def get_absolute_url(self):
+		time= timezone.now().date()
 		return reverse("movie", kwargs={'id': self.id})
 
 class MoviePricing(models.Model):

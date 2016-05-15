@@ -5,6 +5,9 @@
 	<div class="small-12 columns">
 		<header class="header">
 			<h1 class="header__title"><a href="{% url 'schedule' %}">Back to the Schedule</a></h1>
+			<form method="GET">
+			<p>Date: <input type="text" id="datepicker" size="30" name="date"></p>
+			</form>
 			<p class="note note--screen">Please view on a larger screen</p>
 			<p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
 		</header>
@@ -77,7 +80,6 @@
 				</form>
 
 			</div>
-
 		</div>
 		<!-- /plan -->
 		<button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
@@ -94,8 +96,10 @@
 <script src="{% static 'js/main.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/ajax_funcs.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
+		getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}");
 		seatBooking();
 		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}', seatBooking());
 	});

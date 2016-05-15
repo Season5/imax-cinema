@@ -21,7 +21,6 @@ function custom_ajax(path, csrf, booked_seats) {
 function seating(booked_seats) {
     $('.tooltip').click(function() {
         getSeats(booked_seats);
-        console.log(getSeats(booked_seats));
     });
     return getSeats(booked_seats);
 }
