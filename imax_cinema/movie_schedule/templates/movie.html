@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="small-12 columns">
                     <header class="header">
-                            <h1 class="header__title"><a>Back to the Schedule</a></h1>
+                            <h1 class="header__title"><a href="{% url 'schedule' %}">Back to the Schedule</a></h1>
                             <p class="note note--screen">Please view on a larger screen</p>
                             <p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
                         </header>
@@ -64,11 +64,30 @@
 			</div>
 			<!-- /rows -->
 			<button class="action action--buy">Buy tickets</button>
+			<div style="z-index:5000;
+						background:white;
+						height:60vh;
+						 transform: translateY(-0%);">
+            	<form method="POST" action="">
+            		{{ csrf_token }}
+            		<h4>Movie Pricing</h4>
+            		<div class="price">
+            		{% for price in pricing %}
+            		<p>{{ price }}</p>
+            		{% endfor %}
+            		</div>
+            		<p>Total number of tickets remaining: <span id="num_tkt">0</span></p>
+            		<p>Tickets taken: <span id="tk_tkt">0</span></p>
+            		<p>Seats: <span id="seating"></span></p>
+            		{{ form.as_p }}
+            	</form>
+            	
+            </div>
+                
 		</div><!-- /plan -->
                   <button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
                 </div>
             </div>
-
               
                 <script src="{% static 'js/movie.js' %}"></script>
                 <script src="{% static 'js/classie.js' %}"></script>
@@ -88,13 +107,19 @@
 			     <script type="text/javascript" >
 			     $(document).ready(function(){
 			     	var seatValues = [];
+			     	var reg_tkts = $('#id_number_of_regular_tickets');
+			     	var stu_tkts = $('#id_number_of_student_tickets');
+			     	var num_tkts = $('#num_tkt');
+			     	var tk_tkts = $('#tk_tkt');
+			     	$('.price').css({'height': '100px', 'overflow-y': 'scroll'});
+			     	$('p').css({'color':'#000'});
+			     	$('span').css({'color':'#000'});
 			     	$('.tooltip').click(function(){
 			     		var seat = $('.row').find('.row__seat--selected');
 			     		$(seat).each(function(index, data){
 					     	seatValues.push($(data).attr('data-tooltip'));
 					     	seatValues = $.unique(seatValues);
 			     		});
-					    console.log(seatValues);
 			     	});
 			     	$('.action--buy').click(function() {
 						$.ajax({
@@ -103,9 +128,24 @@
 							data: {
 								seats : seatValues,
 								csrfmiddlewaretoken: '{{ csrf_token }}',
+								id: '{{ movie.id }}',
 							},
 							success: function(data) {
-								console.log(data.seats);
+								var num_seats = data.seats.length;
+								for(var x=0; x<num_seats; x++){
+									$('#seating').append(data.seats[x]);	
+									if( x != num_seats - 1){
+										$('#seating').append(", ");	
+									}
+								}
+								num_tkts.text(num_seats);
+								num_tkts.val(num_seats);
+								var new_reg = 0;
+								var new_stu = 0;
+								tk_tkts.text(total);
+								tk_tkts.val(total);
+								console.log(num_tkts.val());
+								console.log(total);
 							}, 
 							error: function( jqXHR, textStatus ) {
 								console.log( "Request failed: " + textStatus );

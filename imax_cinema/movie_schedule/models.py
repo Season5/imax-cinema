@@ -19,8 +19,8 @@ class Movie(models.Model):
 		height_field="height_field"
 		)
 
-	height_field = models.IntegerField(default=0)
-	width_field = models.IntegerField(default=0)
+	height_field = models.PositiveIntegerField(default=0)
+	width_field = models.PositiveIntegerField(default=0)
 
 	def __unicode__(self):
 		return self.title
@@ -31,10 +31,11 @@ class Movie(models.Model):
 class MoviePricing(models.Model):
 	movie = models.ManyToManyField(Movie)
 	starting_time = models.TimeField()
-	student_fee = models.IntegerField(null=True, blank=True)
-	regular_fee = models.IntegerField()
+	student_fee = models.PositiveIntegerField(null=True, blank=True)
+	regular_fee = models.PositiveIntegerField()
 	def __unicode__(self):
-		return str(self.starting_time)
+		fee =  " Student fee: " + str(self.student_fee) if self.student_fee != None else ""
+		return str(self.starting_time)  + fee + " Regular fee: " + str(self.regular_fee)
 
 class MovieViewing(models.Model):
 	movie = models.OneToOneField(
@@ -64,11 +65,13 @@ class Ticket(models.Model):
 		on_delete=models.CASCADE,
 		)
 	ticket = models.ManyToManyField(CinemaSeat)
-	number_of_tickets = models.IntegerField(default=0)
+	number_of_regular_tickets = models.PositiveIntegerField(default=0)
+	number_of_student_tickets = models.PositiveIntegerField(default=0)
 	pricing = models.ManyToManyField(MoviePricing)
 	
 	def __unicode__(self):
 		return str(self.user) + ': ' + str(self.movie) 
 		
-	def total(self):
-		return len(self.ticket)
+class ViewerType(models.Model):
+	user_type = models.CharField(max_length=10)
+		
