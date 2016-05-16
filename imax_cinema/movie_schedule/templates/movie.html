@@ -75,6 +75,7 @@
 					<p>Tickets taken: <span id="tk_tkt">0</span></p>
 					<p>Seats: <span id="seating"></span></p>
 					{{ form.as_p }}
+					<p class="total">Total: <span id="total">0</span></p>
 					<input type="submit" value="Submit" class="button" />
 				</form>
 
@@ -88,12 +89,13 @@
 <script src="{% static 'js/movie.js' %}"></script>
 <script src="{% static 'js/classie.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/ajax_funcs.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ticket_form.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}");
+		getTotalPrice("{% url 'total_price' %}");
 		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}');
 	});
 </script>

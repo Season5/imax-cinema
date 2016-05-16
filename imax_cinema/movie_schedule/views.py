@@ -36,7 +36,6 @@ def schedule(request):
 def movie(request, id = None):
 	single_movie = get_object_or_404(Movie, id = id)
 	viewset = MovieViewing.objects.get(movie=single_movie)
-	pricing = MoviePricing.objects.all()
 	cinema_seats = CinemaSeat.objects.all()
 	
 	time = str(timezone.now().date())
@@ -68,7 +67,6 @@ def movie(request, id = None):
 		"viewset": viewset,
 		'seats': list(chunks(cinema_seats, 18)),
 		'form': form,
-		'pricing': pricing,
 		'time': time,
 	}
 	return render(request, "movie.html", context)
@@ -101,6 +99,26 @@ def occupied_seat_val(request):
 		print cinema_seats
 		response = {
 				'seats': cinema_seats
+			}
+		json = simplejson.dumps(response)
+		return HttpResponse(json, content_type="application/json")
+	
+def total_price(request):
+	if request.is_ajax():
+		stu = int(request.GET.get('stu_tkts'))
+		reg = int(request.GET.get('reg_tkts'))
+		prc = int(request.GET.get('price_id'))
+		current_price = MoviePricing.objects.get(id=prc)
+		regular = reg * int(current_price.regular_fee)
+		if current_price.student_fee != None:
+			student = stu * int(current_price.student_fee)
+		else:
+			student = 0
+		total = regular + student
+		print "Reg", current_price.regular_fee, "PRice", regular
+		print "Stu", current_price.student_fee, "Price", student
+		response = {
+			'total': str(total),
 			}
 		json = simplejson.dumps(response)
 		return HttpResponse(json, content_type="application/json")

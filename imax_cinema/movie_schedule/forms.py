@@ -16,5 +16,5 @@ class TicketForm(forms.ModelForm):
             'number_of_student_tickets': forms.NumberInput(attrs={
                 'class': 'ticketing',
             }),
-            'pricing': forms.RadioSelect(),
+            # 'pricing': forms.RadioSelect(),
         }

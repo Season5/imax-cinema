@@ -34,7 +34,8 @@ function getSeats(booked_seats) {
     });
     return seatValues;
 }
-function getBookedSeats(){
+
+function getBookedSeats() {
     var seats = $('.row').find('.booked');
     seatValues = []
     $(seats).each(function() {
@@ -44,7 +45,6 @@ function getBookedSeats(){
 }
 
 function succeed(data) {
-
     var reg_tkts = $('#id_number_of_regular_tickets');
     var stu_tkts = $('#id_number_of_student_tickets');
     var num_tkts = $('#num_tkt');
@@ -62,7 +62,6 @@ function succeed(data) {
     $('span').css({
         'color': '#000'
     });
-    // $('#formie').hide();
 
 
     var num_seats = data.seats.length;
@@ -71,40 +70,56 @@ function succeed(data) {
     num_tkts.text(num_seats);
     num_tkts.val(num_seats);
     var total = 0;
-    console.log("Seats", num_seats);
     ticketing.change(function() {
         var stu = stu_tkts.val();
         var reg = reg_tkts.val();
         var current = $(this);
         total = +stu + +reg;
-        console.log("Total", total);
         if (reg_id === current.attr('id')) {
             var remaining_tkts = (num_seats - +stu);
-            console.log("Tkts", remaining_tkts);
             stu_tkts.attr('max', remaining_tkts.toString());
-            console.log("Regular");
             if (total > num_seats) {
                 total = num_seats;
                 current.val(remaining_tkts);
             }
             else {
                 tk_tkts.text(total);
-                console.log("Total", total);
             }
         }
         else if (stu_id === current.attr('id')) {
             var remaining_tkts = (num_seats - +reg);
-            console.log("Tkts", remaining_tkts);
             reg_tkts.attr('max', remaining_tkts.toString());
-            console.log("Student");
             if (total > num_seats) {
                 total = num_seats;
                 current.val(remaining_tkts);
             }
             else {
                 tk_tkts.text(total);
-                console.log("Total", total);
             }
         }
+    });
+}
+
+function getTotalPrice(path) {
+    $('#total').css('color', 'black')
+    $('.total').css('color', 'black')
+    $('.ticketing').change(function() {
+        var price_id = $('select').val();
+        console.log('id: ', price_id)
+        var reg_tkts = $('#id_number_of_regular_tickets').val();
+        var stu_tkts = $('#id_number_of_student_tickets').val();
+        $.ajax({
+            url: path,
+            type: "GET",
+            data: {
+                stu_tkts: stu_tkts,
+                reg_tkts: reg_tkts,
+                price_id: price_id,
+            },
+            success: function(data) {
+                console.log($('#total').text())
+                $('#total').text(data.total);
+            }
+        });
     });
 }
