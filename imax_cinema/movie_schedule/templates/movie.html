@@ -93,7 +93,8 @@
 <script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
-		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}', getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}"));
+		getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}");
+		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}');
 	});
 </script>
 {% endblock %}

@@ -8,7 +8,7 @@ var count = 0;
 
 function getDate(path, id) {
     var date;
-    if(count == 0){
+    if (count == 0) {
         date = $('#datepicker').val();
         send(date);
         count++;
@@ -17,7 +17,8 @@ function getDate(path, id) {
         date = $(this).val();
         send(date);
     });
-    function send(date){
+
+    function send(date) {
         $.ajax({
             url: path,
             method: "GET",
@@ -26,7 +27,7 @@ function getDate(path, id) {
                 'movie_id': id,
             },
             success: function(data) {
-                return seatBooking(data.seats);
+                seatBooking(data.seats);
             },
             error: function(jqXHR, textStatus) {
                 console.log("Request failed: " + textStatus);
