@@ -1,18 +1,19 @@
-function seatBooking() {
-    var occupied = $('.occupied');
-    occupied.hide();
-    var occupied_seats = []
+function seatBooking(seats) {
     var grid = $('.row').find('.tooltip');
-    occupied.each(function() {
-        occupied_seats.push($(this).text());
-        occupied_seats = $.unique(occupied_seats);
-    });
+    $(grid).addClass('gray');
+    $(grid).removeAttr('id');
+    $(grid).removeClass('booked');
+
     $(grid).each(function() {
-        if ($.inArray($(this).attr('data-tooltip'), occupied_seats) !== -1) {
-            $(this).css({
-                'background': 'red'
+        if ($.inArray($(this).attr('data-tooltip'), seats) !== -1) {
+            $(this).removeClass('gray');
+            $(this).addClass('booked');
+            $(this).attr('id', 'red');
+        } else {
+            $(this).click(function(){
+                $(this).toggleClass('blue');
             });
         }
     });
-    return occupied_seats;
+    return seats;
 }

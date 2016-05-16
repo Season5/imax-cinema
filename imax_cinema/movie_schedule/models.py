@@ -57,9 +57,10 @@ class CinemaSeat(models.Model):
 	
 		
 class Ticket(models.Model):
-	user = models.OneToOneField(
+	user = models.ForeignKey(
 		settings.AUTH_USER_MODEL,
 		on_delete=models.CASCADE,
+		null=True
 		)
 	movie = models.ForeignKey(
 		'Movie',

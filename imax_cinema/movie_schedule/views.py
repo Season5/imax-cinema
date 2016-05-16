@@ -36,16 +36,9 @@ def schedule(request):
 def movie(request, id = None):
 	single_movie = get_object_or_404(Movie, id = id)
 	viewset = MovieViewing.objects.get(movie=single_movie)
-	pricing = MoviePricing.objects.all()
 	cinema_seats = CinemaSeat.objects.all()
 	
-	time = timezone.now()
-	
-	occupied_seats = Ticket.objects.filter(
-		Q(movie__exact=single_movie)&
-		Q(date__exact=time)
-		)
-	print occupied_seats
+	time = str(timezone.now().date())
 	
 	if request.session.get('seats'):
 		seating = CinemaSeat.objects.filter(seat__in=request.session.get('seats')).values('id')
@@ -59,7 +52,7 @@ def movie(request, id = None):
 		ticket = Ticket.objects.create(
 			user= request.user,
 			movie=single_movie,
-			date=time,
+			date=request.session.get('time'),
 			number_of_regular_tickets=reg,
 			number_of_student_tickets=stu,
 			pricing=prices,
@@ -74,8 +67,7 @@ def movie(request, id = None):
 		"viewset": viewset,
 		'seats': list(chunks(cinema_seats, 18)),
 		'form': form,
-		'pricing': pricing,
-		'occupied': occupied_seats,
+		'time': time,
 	}
 	return render(request, "movie.html", context)
 	
@@ -92,13 +84,41 @@ def seat_values(request):
 def occupied_seat_val(request):
 	if request.is_ajax():
 		time = request.GET.get('date')
+		request.session['time'] = time
 		movie_id = request.GET.get('movie_id')
 		occupied_seats = Ticket.objects.filter(
 			Q(movie__id__exact=movie_id)&
 			Q(date__exact=time)
 			)
+		vals = []
+		for seat in occupied_seats.values('seat'):
+			vals.append(seat['seat'])
+		cinema_seats = CinemaSeat.objects.filter(id__in=vals)
+		cinema_seats = list([seat.seat for seat in cinema_seats])
+		
+		print cinema_seats
 		response = {
-				'seats': list(occupied_seats.values_list('seat'))
+				'seats': cinema_seats
+			}
+		json = simplejson.dumps(response)
+		return HttpResponse(json, content_type="application/json")
+	
+def total_price(request):
+	if request.is_ajax():
+		stu = int(request.GET.get('stu_tkts'))
+		reg = int(request.GET.get('reg_tkts'))
+		prc = int(request.GET.get('price_id'))
+		current_price = MoviePricing.objects.get(id=prc)
+		regular = reg * int(current_price.regular_fee)
+		if current_price.student_fee != None:
+			student = stu * int(current_price.student_fee)
+		else:
+			student = 0
+		total = regular + student
+		print "Reg", current_price.regular_fee, "PRice", regular
+		print "Stu", current_price.student_fee, "Price", student
+		response = {
+			'total': str(total),
 			}
 		json = simplejson.dumps(response)
 		return HttpResponse(json, content_type="application/json")

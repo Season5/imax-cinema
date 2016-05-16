@@ -6,7 +6,7 @@
 		<header class="header">
 			<h1 class="header__title"><a href="{% url 'schedule' %}">Back to the Schedule</a></h1>
 			<form method="GET">
-			<p>Date: <input type="text" id="datepicker" size="30" name="date"></p>
+			<input type="text" id="datepicker" size="30" name="date" placeholder="Date" value="{{ time }}">
 			</form>
 			<p class="note note--screen">Please view on a larger screen</p>
 			<p class="note note--support">Sorry, but your browser doesn't support preserve-3d!</p>
@@ -68,14 +68,14 @@
 			<button class="action action--buy">Buy tickets</button>
 			<div style="z-index:5000;
 						background:white;
-						height:100vh;
-						 transform: translateY(-0%);" id="formie">
+						height:100vh;" id="formie">
 				<form method="POST" action="" autocomplete="off">
 					{% csrf_token %}
 					<p>Total number of tickets remaining: <span id="num_tkt">0</span></p>
 					<p>Tickets taken: <span id="tk_tkt">0</span></p>
 					<p>Seats: <span id="seating"></span></p>
 					{{ form.as_p }}
+					<p class="total">Total: <span id="total">0</span></p>
 					<input type="submit" value="Submit" class="button" />
 				</form>
 
@@ -85,23 +85,18 @@
 		<button class="action action--lookaround action--disabled" arial-label="Unlook View"></button>
 	</div>
 </div>
-{% for ticket in occupied %}
-{% for s in  ticket.seat.values %}
-<p class="occupied">{{ s.seat }}</p>
-{% endfor %}
-{% endfor %}
 
 <script src="{% static 'js/movie.js' %}"></script>
 <script src="{% static 'js/classie.js' %}"></script>
 <script src="{% static 'js/main.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/ajax_funcs.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ticket_form.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/seating.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/datepicker.js' %}"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 		getDate("{% url 'occupied_seat_val' %}", "{{ movie.id }}");
-		seatBooking();
-		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}', seatBooking());
+		getTotalPrice("{% url 'total_price' %}");
+		custom_ajax("{% url 'seat_values' %}", '{{ csrf_token }}');
 	});
 </script>
 {% endblock %}
