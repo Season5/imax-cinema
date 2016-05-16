@@ -4,6 +4,11 @@
 # and make your changes there.
 
 
+# redirect to login
+LOGIN_URL = '/accounts/login/'
+# redirect to home
+LOGIN_REDIRECT_URL = '/schedule/'
+
 # Specifies the login method to use -- whether the user logs in by entering
 # their username, e-mail address, or either one of both. Possible values
 # are 'username' | 'email' | 'username_email'
@@ -17,6 +22,7 @@ ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 # an authenticated user. Default is settings.LOGIN_REDIRECT_URL
 # ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL
 
+ACCOUNT_SESSION_REMEMBER =None
 # Determines the expiration date of email confirmation mails (# of days).
 # ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 3
 
@@ -40,7 +46,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = 'Imax previews'
 # the user for additional input (e.g. newsletter signup, birth
 # date). This class should implement a `def signup(self, request, user)`
 # method, where user represents the newly signed up user.
-# ACCOUNT_SIGNUP_FORM_CLASS = None
+ACCOUNT_SIGNUP_FORM_CLASS = None
 
 # When signing up, let the user type in their password twice to avoid typ-o's.
 ACCOUNT_SIGNUP_PASSWORD_VERIFICATION = True
@@ -84,3 +90,11 @@ SOCIALACCOUNT_AVATAR_SUPPORT = True
 
 # Dictionary containing provider specific settings.
 # SOCIALACCOUNT_PROVIDERS
+SOCIALACCOUNT_PROVIDERS ={ 
+    'google':{
+        'SCOPE': ['profile', 'email'],
+        'AUTH_PARAMS': {
+            'access_type': 'online' 
+            } 
+        }
+    }
