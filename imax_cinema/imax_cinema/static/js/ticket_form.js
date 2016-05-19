@@ -92,32 +92,15 @@ function succeed(data) {
         var reg = reg_tkts.val();
         var current = $(this);
         total = +stu + +reg;
-        if (+reg == 0 && +stu == 0) {
-            stu_tkts.attr('max', num_seats.toString());
-            reg_tkts.attr('max', num_seats.toString());
+        var reg_remaining_tkts = (num_seats - +stu);
+        var stu_remaining_tkts = (num_seats - +reg);
+        var condition = (reg_id === current.attr('id'));
+        var remaining_tkts = condition ? reg_remaining_tkts :stu_remaining_tkts;
+        if (total > num_seats) {
+            total = num_seats;
+            current.val(remaining_tkts);
         }
-        else if (reg_id === current.attr('id')) {
-            var remaining_tkts = (num_seats - +stu);
-            stu_tkts.attr('max', remaining_tkts.toString());
-            if (total > num_seats) {
-                total = num_seats;
-                current.val(remaining_tkts);
-            }
-            else {
-                tk_tkts.text(total);
-            }
-        }
-        else if (stu_id === current.attr('id')) {
-            var remaining_tkts = (num_seats - +reg);
-            reg_tkts.attr('max', remaining_tkts.toString());
-            if (total > num_seats) {
-                total = num_seats;
-                current.val(remaining_tkts);
-            }
-            else {
-                tk_tkts.text(total);
-            }
-        }
+        tk_tkts.text(total);
     });
 }
 
@@ -131,17 +114,21 @@ function getTotalPrice(path) {
         var price_id = $('select').val();
         var reg_tkts = $('#id_number_of_regular_tickets').val();
         var stu_tkts = $('#id_number_of_student_tickets').val();
-        $.ajax({
-            url: path,
-            type: "GET",
-            data: {
-                stu_tkts: stu_tkts,
-                reg_tkts: reg_tkts,
-                price_id: price_id,
-            },
-            success: function(data) {
-                $('#total').text(data.total);
-            }
-        });
+        var num_tkts = $('#num_tkt').text();
+        var total = +stu_tkts + +reg_tkts;
+        if (total <= +num_tkts) {
+            $.ajax({
+                url: path,
+                type: "GET",
+                data: {
+                    stu_tkts: stu_tkts,
+                    reg_tkts: reg_tkts,
+                    price_id: price_id,
+                },
+                success: function(data) {
+                    $('#total').text(data.total);
+                }
+            });
+        }
     });
 }
