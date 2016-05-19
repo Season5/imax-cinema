@@ -68,8 +68,7 @@ function succeed(data) {
         if (value) {
             var string = $('#id_pricing option[value=%d]'.replace('%d', value)).text();
             var find_student = string.search("Student");
-            console.log(string);
-            console.log(find_student);
+
             if (find_student == -1) {
                 stu_tkts.hide(1000);
                 $(stu_tkts.get(0).labels).hide(1000);
@@ -93,14 +92,20 @@ function succeed(data) {
         var reg = reg_tkts.val();
         var current = $(this);
         total = +stu + +reg;
-        if (reg_id === current.attr('id')) {
+        if (+reg == 0 && +stu == 0) {
+            stu_tkts.attr('max', num_seats.toString());
+            reg_tkts.attr('max', num_seats.toString());
+        }
+        else if (reg_id === current.attr('id')) {
             var remaining_tkts = (num_seats - +stu);
             stu_tkts.attr('max', remaining_tkts.toString());
             if (total > num_seats) {
                 total = num_seats;
                 current.val(remaining_tkts);
             }
-            tk_tkts.text(total);
+            else {
+                tk_tkts.text(total);
+            }
         }
         else if (stu_id === current.attr('id')) {
             var remaining_tkts = (num_seats - +reg);
@@ -109,7 +114,9 @@ function succeed(data) {
                 total = num_seats;
                 current.val(remaining_tkts);
             }
-            tk_tkts.text(total);
+            else {
+                tk_tkts.text(total);
+            }
         }
     });
 }
@@ -122,7 +129,6 @@ function getTotalPrice(path) {
     $(stu_tkts.get(0).labels).hide();
     $('.ticketing').change(function() {
         var price_id = $('select').val();
-        console.log('id: ', price_id)
         var reg_tkts = $('#id_number_of_regular_tickets').val();
         var stu_tkts = $('#id_number_of_student_tickets').val();
         $.ajax({
@@ -134,7 +140,6 @@ function getTotalPrice(path) {
                 price_id: price_id,
             },
             success: function(data) {
-                console.log($('#total').text())
                 $('#total').text(data.total);
             }
         });
