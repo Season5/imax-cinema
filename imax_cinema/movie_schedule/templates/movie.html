@@ -68,8 +68,8 @@
 			<button class="action action--buy">Buy tickets</button>
 			<div style="z-index:5000;
 						background:white;
-						height:100vh;" id="formie">
-				<form method="POST" action="" autocomplete="off">
+						height:100vh;">
+				<form method="POST" action="" autocomplete="off"  id="formie">
 					{% csrf_token %}
 					<p>Total number of tickets remaining: <span id="num_tkt">0</span></p>
 					<p>Tickets taken: <span id="tk_tkt">0</span></p>
