@@ -63,6 +63,24 @@ function succeed(data) {
         'color': '#000'
     });
 
+    $('#id_pricing').change(function() {
+        var value = $(this).val();
+        if (value) {
+            var string = $('#id_pricing option[value=%d]'.replace('%d', value)).text();
+            var find_student = string.search("Student");
+            console.log(string);
+            console.log(find_student);
+            if (find_student == -1) {
+                stu_tkts.hide(1000);
+                $(stu_tkts.get(0).labels).hide(1000);
+            }
+            else {
+                stu_tkts.show(1000);
+                $(stu_tkts.get(0).labels).show(1000);
+            }
+        }
+    });
+
 
     var num_seats = data.seats.length;
     $('#seating').text(data.seats.toString());
@@ -82,9 +100,7 @@ function succeed(data) {
                 total = num_seats;
                 current.val(remaining_tkts);
             }
-            else {
-                tk_tkts.text(total);
-            }
+            tk_tkts.text(total);
         }
         else if (stu_id === current.attr('id')) {
             var remaining_tkts = (num_seats - +reg);
@@ -93,16 +109,17 @@ function succeed(data) {
                 total = num_seats;
                 current.val(remaining_tkts);
             }
-            else {
-                tk_tkts.text(total);
-            }
+            tk_tkts.text(total);
         }
     });
 }
 
 function getTotalPrice(path) {
-    $('#total').css('color', 'black')
-    $('.total').css('color', 'black')
+    $('#total').css('color', 'black');
+    $('.total').css('color', 'black');
+    var stu_tkts = $('#id_number_of_student_tickets');
+    stu_tkts.hide();
+    $(stu_tkts.get(0).labels).hide();
     $('.ticketing').change(function() {
         var price_id = $('select').val();
         console.log('id: ', price_id)
