@@ -63,6 +63,23 @@ function succeed(data) {
         'color': '#000'
     });
 
+    $('#id_pricing').change(function() {
+        var value = $(this).val();
+        if (value) {
+            var string = $('#id_pricing option[value=%d]'.replace('%d', value)).text();
+            var find_student = string.search("Student");
+
+            if (find_student == -1) {
+                stu_tkts.hide(1000);
+                $(stu_tkts.get(0).labels).hide(1000);
+            }
+            else {
+                stu_tkts.show(1000);
+                $(stu_tkts.get(0).labels).show(1000);
+            }
+        }
+    });
+
 
     var num_seats = data.seats.length;
     $('#seating').text(data.seats.toString());
@@ -75,7 +92,11 @@ function succeed(data) {
         var reg = reg_tkts.val();
         var current = $(this);
         total = +stu + +reg;
-        if (reg_id === current.attr('id')) {
+        if (+reg == 0 && +stu == 0) {
+            stu_tkts.attr('max', num_seats.toString());
+            reg_tkts.attr('max', num_seats.toString());
+        }
+        else if (reg_id === current.attr('id')) {
             var remaining_tkts = (num_seats - +stu);
             stu_tkts.attr('max', remaining_tkts.toString());
             if (total > num_seats) {
@@ -101,11 +122,13 @@ function succeed(data) {
 }
 
 function getTotalPrice(path) {
-    $('#total').css('color', 'black')
-    $('.total').css('color', 'black')
+    $('#total').css('color', 'black');
+    $('.total').css('color', 'black');
+    var stu_tkts = $('#id_number_of_student_tickets');
+    stu_tkts.hide();
+    $(stu_tkts.get(0).labels).hide();
     $('.ticketing').change(function() {
         var price_id = $('select').val();
-        console.log('id: ', price_id)
         var reg_tkts = $('#id_number_of_regular_tickets').val();
         var stu_tkts = $('#id_number_of_student_tickets').val();
         $.ajax({
@@ -117,7 +140,6 @@ function getTotalPrice(path) {
                 price_id: price_id,
             },
             success: function(data) {
-                console.log($('#total').text())
                 $('#total').text(data.total);
             }
         });
